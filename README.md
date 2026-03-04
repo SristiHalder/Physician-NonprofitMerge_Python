@@ -79,12 +79,27 @@ This repository documents the physician loan data integration and nonprofit-tagg
 
 ---
 
-## Environment & Dependencies
+---
+## Correct sequence to execute + purpose 
 
+1. Facility_Affiliation.py (Reconstructs hospital affiliation variables in PC files using Facility Affiliation datasets.)
+2. compareData_append.py (Standardizes columns across PC years and combines them into one master dataset (pcTotal))
+3. sk_to_pc_hosp.py (Matches SKA hospital codes (CODE7) to PC hospitals using shared NPIs)
+4. sk_to_pc_pgp.py (Matches SKA organization codes (CODE3) to PC organizations using shared NPIs.)
+5. ska_company1_pgp (Matches SKA COMPANY1 names to PC organizations using shared NPIs.)
+6. ska_fixing.py (Extracts SKA records that failed the PC matching step (unmatched organizations))
+7. ska_irs_hosp.py (Matches unmatched SKA hospitals to IRS nonprofit organizations using name/address similarity.)
+8. ska_irs_pgp.py (Matches unmatched SKA PGP organizations to IRS nonprofit organizations.)
+9. ska_irs_company1.py (Matches unmatched SKA COMPANY1 organizations to IRS nonprofit organizations.)
+10. cleaned_hosp_pgp_company1.py (Filters IRS matches using similarity thresholds and removes bad matches (PO boxes, churches).)
+11. pc+ska_nonprofit.py (Creates nonprofit indicator variables in the PC and SKA datasets.)
+12. nonprofit_merge.py (Merges nonprofit flags from PC and SKA into the final physician dataset.)
+13. Regression_nonprofit_gradyr.py (Runs regression analyzing how nonprofit employment varies by medical school graduation year)
+
+## Environment & Dependencies
 - Python 3.9+  
 - `pandas`, `numpy`, `scikit-learn`  
 - Mixed encodings (`utf-8`, `latin1`, `ISO-8859-1`) handled within scripts.  
-
 ---
 
 ## Reproducibility & Data Access
